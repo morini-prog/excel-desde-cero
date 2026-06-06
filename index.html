@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft Excel básico e intermedio · Capacitación Nivel Superior</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #107c41;
+      --primary-hover: #156535;
+      --primary-light: #f0f9f4;
+      --primary-border: #b3e5c9;
+      --accent: #217346;
+      --accent-teal: #107c41;
+      --dark-bg: #0b1a10;
+      --light-bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --text-light: #94a3b8;
+      --border: #e2e8f0;
+      
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
+      --shadow-lg: 0 10px 25px -5px rgba(16, 124, 65, 0.06), 0 8px 10px -6px rgba(16, 124, 65, 0.04);
+      --shadow-premium: 0 25px 50px -12px rgba(11, 26, 16, 0.25);
+      
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--dark-bg);
+      color: #fff;
+      padding: 100px 0 88px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 60% at 75% 25%, rgba(16, 124, 65, 0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 15% 85%, rgba(33, 115, 70, 0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      backdrop-filter: blur(4px);
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary-border);
+      flex-shrink: 0;
+      box-shadow: 0 0 8px var(--primary-border);
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.85); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+      filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.65));
+      color: #ffffff;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, #a7f3d0 0%, #34d399 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 620px;
+      font-weight: 400;
+      line-height: 1.7;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+    }
+
+    /* NAV TABS */
+    .nav-sticky {
+      background: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px) saturate(180%);
+      transition: var(--transition);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tab {
+      flex-shrink: 0;
+      padding: 16px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      background: none;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-tab svg {
+      width: 16px;
+      height: 16px;
+      color: var(--text-light);
+      transition: var(--transition);
+    }
+
+    .nav-tab:hover {
+      color: var(--primary);
+    }
+
+    .nav-tab:hover svg {
+      color: var(--primary);
+    }
+
+    .nav-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .nav-tab.active svg {
+      color: var(--primary);
+    }
+
+    /* MAIN CONTENT */
+    .main {
+      padding: 24px 0 80px;
+    }
+
+    .section {
+      display: none;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1), transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .section.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-wrap {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .section-heading {
+      padding: 32px 0 28px;
+    }
+
+    .block-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--text-dark);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .block-label span {
+      color: #34d399;
+    }
+
+    .section-heading h2 {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-heading-bar {
+      width: 48px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin: 12px 0;
+    }
+
+    .section-heading p {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 680px;
+      line-height: 1.65;
+    }
+
+    .subblock {
+      margin-bottom: 40px;
+    }
+
+    .subblock-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .subblock-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--primary-light);
+      border-radius: var(--radius-sm);
+      color: var(--primary);
+    }
+
+    .subblock-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .subblock-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: -0.01em;
+    }
+
+    .subblock-badge {
+      font-size: 0.72rem;
+      font-weight: 600;
+      background: #f0fdf4;
+      color: #16a34a;
+      border: 1px solid #bbf7d0;
+      padding: 3px 12px;
+      border-radius: var(--radius-full);
+      margin-left: auto;
+    }
+
+    /* CONCEPT CARD */
+    .concept-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .concept-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .concept-card-header .icon-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .concept-card-header .icon-container svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .concept-card-header h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .concept-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .concept-col {
+      background: #f8fafc;
+      border-radius: var(--radius-md);
+      padding: 20px;
+      border: 1px solid var(--border);
+      transition: var(--transition);
+    }
+
+    .concept-col:hover {
+      border-color: var(--primary-border);
+      background: #fff;
+      box-shadow: var(--shadow-md);
+    }
+
+    .concept-col-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .concept-col-icon.negative {
+      background: #fef2f2;
+      color: #ef4444;
+    }
+
+    .concept-col-icon.positive {
+      background: #f0fdf4;
+      color: #22c55e;
+    }
+
+    .concept-col-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .concept-col h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .concept-col p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* TOPIC CARD */
+    .topic-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px 30px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .topic-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0px;
+      background: var(--primary);
+      border-top-left-radius: var(--radius-lg);
+      border-bottom-left-radius: var(--radius-lg);
+      transition: var(--transition);
+    }
+
+    .topic-card:hover {
+      border-color: var(--primary-border);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+
+    .topic-card:hover::after {
+      width: 4px;
+    }
+
+    .topic-card-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .topic-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: var(--radius-md);
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: var(--transition);
+    }
+
+    .topic-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .topic-card:hover .topic-icon {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .topic-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .topic-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .topic-steps {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .topic-steps-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topic-steps-label svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .step-item strong {
+      color: var(--text-dark);
+    }
+
+    .step-num {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      box-shadow: 0 2px 4px rgba(16, 124, 65, 0.2);
+    }
+
+    .links-row {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .link-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-decoration: none;
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      transition: var(--transition);
+    }
+
+    .link-pill:hover {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 10px rgba(16, 124, 65, 0.15);
+    }
+
+    .link-pill svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* RECURSOS TAB GRID */
+    .rec-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .rec-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      text-decoration: none;
+      color: inherit;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .rec-card:hover {
+      border-color: var(--primary-border);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .rec-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      align-self: flex-start;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .rec-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+
+    .rec-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      flex-grow: 1;
+      margin-bottom: 12px;
+    }
+
+    .rec-action {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: auto;
+    }
+
+    /* QUIZ SECTION */
+    .quiz-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-top: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quiz-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+
+    .quiz-header h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .quiz-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: var(--text-muted);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+    }
+
+    .quiz-question {
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .quiz-question:last-of-type {
+      border-bottom: none;
+      margin-bottom: 12px;
+    }
+
+    .quiz-question-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 16px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.88rem;
+    }
+
+    .quiz-option input[type="radio"] {
+      margin-top: 4px;
+      accent-color: var(--primary);
+    }
+
+    .quiz-option:hover {
+      background: var(--light-bg);
+      border-color: var(--text-light);
+    }
+
+    .quiz-option.selected {
+      background: var(--primary-light);
+      border-color: var(--primary-border);
+    }
+
+    .quiz-feedback {
+      display: none;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-left: 3px solid var(--primary);
+      background: #f8fafc;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .quiz-action-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px solid var(--border);
+    }
+
+    .btn-verify {
+      background: var(--primary);
+      color: white;
+      font-weight: 600;
+      font-size: 0.88rem;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-verify:hover {
+      background: var(--primary-hover);
+    }
+
+    .quiz-score-display {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    /* EXCEL SIMULATOR STYLING */
+    .simulator-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-top: 32px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .simulator-header {
+      margin-bottom: 24px;
+    }
+
+    .simulator-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .simulator-header h3 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .simulator-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .simulator-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 32px;
+    }
+
+    @media (max-width: 1024px) {
+      .simulator-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .sim-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .challenges-panel {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .challenges-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .challenges-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .challenge-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .challenge-status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--text-light);
+      background: transparent;
+      margin-top: 3px;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+
+    .challenge-item.completed .challenge-status-dot {
+      border-color: #22c55e;
+      background: #22c55e;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+    }
+
+    .challenge-item.completed .challenge-text {
+      text-decoration: line-through;
+      color: var(--text-light);
+    }
+
+    .congrats-banner {
+      display: none;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #16a34a;
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-top: 14px;
+      animation: slideDown 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* EXCEL SPREADSHEET INTERACTIVE UI */
+    .excel-sim-container {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #f3f4f6;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .excel-formula-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      height: 36px;
+      padding: 2px;
+    }
+
+    .fx-indicator {
+      font-style: italic;
+      font-weight: 700;
+      font-family: serif;
+      color: var(--text-light);
+      width: 32px;
+      text-align: center;
+      border-right: 1px solid #e5e7eb;
+      user-select: none;
+    }
+
+    #formula-input {
+      border: none;
+      outline: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.84rem;
+      padding: 0 8px;
+      flex-grow: 1;
+      height: 100%;
+    }
+
+    #apply-formula-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 3px;
+      padding: 0 14px;
+      height: 100%;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    #apply-formula-btn:hover:not(:disabled) {
+      background: var(--primary-hover);
+    }
+
+    #apply-formula-btn:disabled {
+      background: #e5e7eb;
+      color: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .excel-grid-wrapper {
+      background: white;
+      overflow-x: auto;
+      border: 1px solid #d1d5db;
+    }
+
+    .excel-grid-table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 0.8rem;
+      min-width: 480px;
+    }
+
+    .excel-grid-table th, .excel-grid-table td {
+      border: 1px solid #e5e7eb;
+      padding: 6px 10px;
+      height: 28px;
+      font-family: inherit;
+    }
+
+    .excel-grid-table th {
+      background: #f9fafb;
+      color: #374151;
+      font-weight: 600;
+      text-align: center;
+      user-select: none;
+    }
+
+    .grid-header-col-index {
+      width: 36px;
+      background: #f3f4f6 !important;
+      border-right: 1px solid #d1d5db !important;
+    }
+
+    .grid-row-index {
+      background: #f9fafb;
+      color: #6b7280;
+      text-align: center;
+      font-weight: 600;
+      user-select: none;
+      width: 36px;
+      border-right: 1px solid #cbd5e1 !important;
+    }
+
+    .excel-header-cell {
+      background: #f3f4f6 !important;
+      font-weight: 700;
+      color: #4b5563;
+    }
+
+    .num-cell {
+      text-align: right;
+    }
+
+    .bold-text {
+      font-weight: 700;
+    }
+
+    .highlight-green {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .highlight-yellow {
+      background: #fffbef;
+      color: #b45309;
+    }
+
+    .editable-cell {
+      cursor: pointer;
+      background: #fafafa;
+      text-align: right;
+      transition: var(--transition);
+      outline: none;
+    }
+
+    .editable-cell:hover {
+      background: #f0fdf4;
+    }
+
+    .editable-cell.selected {
+      background: #fff;
+      box-shadow: inset 0 0 0 2px var(--primary);
+    }
+
+    .editable-cell.correct-val {
+      background: #ecfdf5;
+      color: #047857;
+      font-weight: 600;
+    }
+
+    .editable-cell.error-val {
+      background: #fef2f2;
+      box-shadow: inset 0 0 0 2px #ef4444;
+    }
+
+    .excel-grid-table td:not(.editable-cell):not(.grid-row-index) {
+      user-select: none;
+    }
+
+    .simulator-hint {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* FOOTER & BUTTON BACK TO TOP */
+    .back-top {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      background: var(--text-dark);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px);
+      transition: var(--transition);
+      z-index: 99;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow-md);
+    }
+
+    .back-top.vis {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .back-top:hover {
+      background: var(--primary);
+      transform: scale(1.05);
+    }
+
+    .footer-bar {
+      background: var(--dark-bg);
+      color: rgba(255, 255, 255, 0.7);
+      padding: 40px 0;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .footer-bar a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-bar a:hover {
+      color: #34d399;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Capacitación Nivel Inicial
+      </div>
+      <h1>Excel <span>desde cero</span></h1>
+      <p>Aprendé a crear tus primeras planillas de cálculo, usá fórmulas básicas y organizá tus datos sin complicaciones. Un curso práctico diseñado para arrancar sin frustraciones y con explicaciones directas.</p>
+    </div>
+  </section>
+
+  <!-- STICKY NAVIGATION TABS -->
+  <nav class="nav-sticky" role="navigation">
+    <div class="nav-inner" role="tablist" aria-label="Secciones del curso">
+      <button class="nav-tab active" role="tab" aria-selected="true" aria-controls="b1" id="tab-b1" onclick="goTab('b1', this)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg>
+        Bloque 1: Primeros pasos
+      </button>
+      <button class="nav-tab" role="tab" aria-selected="false" aria-controls="b2" id="tab-b2" onclick="goTab('b2', this)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h-6a2 2 0 00-2 2v9a2 2 0 002 2h18a2 2 0 002-2V9a2 2 0 00-2-2h-6m-3 4V3m0 8l-3-3m3 3l3-3"></path></svg>
+        Bloque 2: Operaciones y funciones
+      </button>
+      <button class="nav-tab" role="tab" aria-selected="false" aria-controls="b3" id="tab-b3" onclick="goTab('b3', this)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9h6M9 13h6M9 17h4"></path></svg>
+        Bloque 3: Organización de datos
+      </button>
+      <button class="nav-tab" role="tab" aria-selected="false" aria-controls="b4" id="tab-b4" onclick="goTab('b4', this)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
+        Bloque 4: Gráficos básicos
+      </button>
+      <button class="nav-tab" role="tab" aria-selected="false" aria-controls="rec" id="tab-rec" onclick="goTab('rec', this)">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+        Recursos
+      </button>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTAINER -->
+  <main class="main">
+
+    <!-- BLOQUE 1: PRIMEROS PASOS Y ANATOMÍA DE LA HOJA -->
+    <div class="section active fade-in" id="b1" role="tabpanel" aria-labelledby="tab-b1">
+      <div class="section-wrap">
+        <div class="section-heading">
+          <div class="block-label">Bloque <span>01</span></div>
+          <h2>Primeros pasos y anatomía de la hoja</h2>
+          <div class="section-heading-bar"></div>
+          <p>Para usar Excel sin frustrarte, lo primero es entender cómo se organiza y cómo cargar la información de forma correcta. Si ordenás bien tus datos desde el principio, Excel va a hacer todo el trabajo difícil por vos.</p>
+        </div>
+
+        <div class="subblock">
+          <div class="subblock-header">
+            <span class="subblock-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </span>
+            <span class="subblock-title">Geometría de la Planilla y Entrada de Datos</span>
+            <span class="subblock-badge">Fundamental</span>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-card-header">
+              <div class="icon-container">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+              </div>
+              <h3>¿Por qué es clave cargar los datos limpios?</h3>
+            </div>
+            <div class="concept-grid">
+              <div class="concept-col">
+                <div class="concept-col-icon negative">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Carga sucia (No recomendada)</h4>
+                <p>Escribir números mezclados con letras o símbolos dentro de la misma celda (ej. "150 USD" o "$2000 pesos"). Si hacés esto, Excel interpreta la celda como texto y no vas a poder usarla para hacer sumas ni ningún tipo de cálculo matemático.</p>
+              </div>
+              <div class="concept-col">
+                <div class="concept-col-icon positive">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Carga limpia (Recomendada)</h4>
+                <p>Ingresar únicamente el número puro en la celda (ej. "150" o "2000"). Si querés ver el signo de pesos o la moneda, se lo agregás visualmente usando el botón de formato de celdas. Así, la celda queda lista para calcular sin errores.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Celdas, filas y columnas: La anatomía básica</div>
+                <div class="topic-desc">Una planilla de Excel es una gran cuadrícula. Las columnas van en vertical y se identifican con letras (A, B, C...). Las filas van en horizontal y llevan números (1, 2, 3...). La unión de una fila y una columna es una celda (por ejemplo: <strong>B3</strong>).</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Hacé clic en cualquier celda para seleccionarla; vas a ver su nombre en el <strong>Cuadro de nombres</strong> (arriba a la izquierda).</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Escribí el texto o número y presioná <strong>Enter</strong> para confirmar e ir a la celda de abajo (o <strong>Tab</strong> para moverte a la derecha).</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Si querés corregir lo que escribiste en una celda sin borrar su contenido previo, hacé doble clic sobre ella o presioná la tecla <strong>F2</strong>.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Controlador de relleno: Copiar y hacer series fáciles</div>
+                <div class="topic-desc">No hace falta que escribas todo a mano. El cuadradito verde que aparece en la esquina de la celda seleccionada te permite copiar datos o completar series automáticas (como los días de la semana o meses del año) con solo arrastrar.</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Escribí el primer dato en una celda (por ejemplo: "Lunes" o "Enero").</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Apuntá con el mouse a la esquina inferior derecha de la celda hasta que el cursor se transforme en una cruz negra finita (<strong>+</strong>).</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Mantené apretado el clic izquierdo y arrastrá hacia abajo o hacia la derecha para autocompletar la serie.</span></div>
+                <div class="step-item"><span class="step-num">4</span><span>Si querés copiar exactamente el mismo valor (ej. repetir un número 10 veces), escribilo en la celda y arrastrá la cruz normalmente.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AUTOEVALUACIÓN BLOQUE 1 -->
+        <div class="quiz-container" id="quiz-b1">
+          <div class="quiz-header">
+            <h3>Autoevaluación del Bloque 1: Primeros pasos</h3>
+            <span class="quiz-badge">3 Preguntas</span>
+          </div>
+          <div class="quiz-questions">
+            <div class="quiz-question" data-correct="1">
+              <div class="quiz-question-text">1. Si escribís "$450 pesos" de forma manual dentro de una celda:</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b1-1" value="0"> <span>A) Excel aplica el formato monetario automáticamente y permite sumar las celdas.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b1-1" value="1"> <span>B) Se interpreta como un tipo de dato Texto y no vas a poder usar la celda para hacer cálculos.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b1-1" value="2"> <span>C) La celda se bloquea por seguridad.</span></label>
+              </div>
+              <div class="quiz-feedback">Cualquier palabra o letra escrita directamente con los números convierte la celda en texto común y le quita la capacidad de calcular.</div>
+            </div>
+            <div class="quiz-question" data-correct="1">
+              <div class="quiz-question-text">2. ¿Qué nombre recibe la intersección entre una columna (letra) y una fila (número)?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b1-2" value="0"> <span>A) Rango.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b1-2" value="1"> <span>B) Celda (por ejemplo: B3).</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b1-2" value="2"> <span>C) Cuadro de fórmulas.</span></label>
+              </div>
+              <div class="quiz-feedback">Cada celda en Excel tiene una dirección única que se forma combinando su columna y su fila.</div>
+            </div>
+            <div class="quiz-question" data-correct="2">
+              <div class="quiz-question-text">3. Si querés autocompletar una serie como los días de la semana de lunes a viernes:</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b1-3" value="0"> <span>A) Escribís cada día a mano uno por uno.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b1-3" value="1"> <span>B) Creás una macro avanzada.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b1-3" value="2"> <span>C) Usás el controlador de relleno arrastrando la cruz negra desde la esquina inferior derecha.</span></label>
+              </div>
+              <div class="quiz-feedback">El controlador de relleno detecta series lógicas como días o meses y las completa automáticamente de forma veloz.</div>
+            </div>
+          </div>
+          <div class="quiz-action-bar">
+            <button class="btn-verify" onclick="verifyQuiz('quiz-b1')">Verificar Respuestas</button>
+            <div class="quiz-score-display">Puntuación: 0 / 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 2: OPERACIONES Y FUNCIONES DEL DÍA A DÍA -->
+    <div class="section" id="b2" role="tabpanel" aria-labelledby="tab-b2">
+      <div class="section-wrap">
+        <div class="section-heading">
+          <div class="block-label">Bloque <span>02</span></div>
+          <h2>Operaciones y funciones del día a día</h2>
+          <div class="section-heading-bar"></div>
+          <p>Perdéle el miedo a las matemáticas en la planilla. Con las fórmulas básicas podés lograr que Excel calcule por vos de forma automática y siempre actualizada.</p>
+        </div>
+
+        <div class="subblock">
+          <div class="subblock-header">
+            <span class="subblock-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h-6a2 2 0 00-2 2v9a2 2 0 002 2h18a2 2 0 002-2V9a2 2 0 00-2-2h-6m-3 4V3m0 8l-3-3m3 3l3-3"></path></svg>
+            </span>
+            <span class="subblock-title">Uso de Fórmulas y Operaciones Básicas</span>
+            <span class="subblock-badge">Esencial</span>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-card-header">
+              <div class="icon-container">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+              </div>
+              <h3>El gran secreto de las fórmulas</h3>
+            </div>
+            <div class="concept-grid">
+              <div class="concept-col">
+                <div class="concept-col-icon negative">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Hacer cuentas con números fijos (No recomendado)</h4>
+                <p>Escribir `=100+50` dentro de una celda. Si el día de mañana cambia el precio del producto o la cantidad, el total va a seguir mostrando el mismo resultado y vas a tener que corregirlo a mano.</p>
+              </div>
+              <div class="concept-col">
+                <div class="concept-col-icon positive">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Hacer cuentas usando las celdas (Recomendado)</h4>
+                <p>Escribir `=A1+B1`. De esta manera, si cambiás los valores de las celdas A1 o B1 en el futuro, el resultado final se va a actualizar solo al instante sin que tengas que volver a escribir nada.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Operaciones matemáticas básicas</div>
+                <div class="topic-desc">Toda fórmula o cálculo debe arrancar obligatoriamente con el signo igual (<strong>=</strong>). Para sumar usás (<strong>+</strong>), para restar (<strong>-</strong>), para multiplicar el asterisco (<strong>*</strong>) y para dividir la barra inclinada (<strong>/</strong>).</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Hacé clic en la celda donde querés que aparezca el resultado.</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Escribí el signo igual (<strong>=</strong>).</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Hacé clic en la primera celda que tiene el número, escribí el signo de la operación (ej. <strong>*</strong>) y hacé clic en la segunda celda. Ejemplo: `=B2*C2`.</span></div>
+                <div class="step-item"><span class="step-num">4</span><span>Presioná la tecla <strong>Enter</strong> para ver el resultado calculado.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Funciones indispensables: SUMA y PROMEDIO</div>
+                <div class="topic-desc">Si tenés que sumar o promediar una lista larga de datos continuos, no hace falta que escribas una suma celda por celda. Usás las funciones con dos puntos (<strong>:</strong>) para definir un rango continuo desde la primera hasta la última celda.</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Para sumar un grupo de celdas contiguas, escribí `=SUMA(` y seleccioná con el mouse las celdas desde la primera hasta la última, luego cerrá el paréntesis. Ejemplo: `=SUMA(D2:D4)`.</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Para calcular el promedio de ese mismo grupo, escribí `=PROMEDIO(D2:D4)` de la misma forma.</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Presioná <strong>Enter</strong>. Si corregís cualquier número de la lista, el resultado final se vuelve a calcular solo.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIMULADOR INTERACTIVO DE EXCEL -->
+          <div class="simulator-card">
+            <div class="simulator-header">
+              <div class="simulator-badge">Simulador Interactivo</div>
+              <h3>Simulador de Planilla de Cálculo</h3>
+              <p>Hacé clic sobre las celdas vacías de la columna <strong>Total</strong> para seleccionarlas, escribí su fórmula correspondiente en la barra superior (`fx`) y presioná "Aplicar" (o Enter) para ver los resultados.</p>
+            </div>
+            
+            <div class="simulator-layout">
+              <!-- CONTROLES Y RETOS -->
+              <div class="sim-controls">
+                <div class="challenges-panel">
+                  <div class="challenges-title">🎯 Desafíos de Fórmulas</div>
+                  <ul class="challenges-list">
+                    <li class="challenge-item" id="excel-challenge-1">
+                      <span class="challenge-status-dot"></span>
+                      <span class="challenge-text"><strong>Reto 1:</strong> Calculá el total del Cuaderno multiplicando el precio y cantidad en la celda <strong>D2</strong>.</span>
+                    </li>
+                    <li class="challenge-item" id="excel-challenge-2">
+                      <span class="challenge-status-dot"></span>
+                      <span class="challenge-text"><strong>Reto 2:</strong> Calculá el Total General en la celda <strong>D5</strong> sumando el rango de los tres totales individuales.</span>
+                    </li>
+                  </ul>
+                  
+                  <div class="congrats-banner" id="excel-congrats-banner">
+                    🏆 ¡Excelente! Dominás las fórmulas básicas y la función SUMA para cálculos dinámicos.
+                  </div>
+                </div>
+
+                <div class="simulator-hint">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 16px; height: 16px; flex-shrink: 0; color: var(--primary);"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                  <span><strong>Tip de Fórmulas:</strong> Iniciá siempre con el signo igual (<strong>=</strong>). Para multiplicar usá el asterisco (<strong>*</strong>) y para sumar un rango usá la función `=SUMA(primeraCelda:ultimaCelda)`.</span>
+                </div>
+              </div>
+
+              <!-- PLANILLA DE CÁLCULO INTERACTIVA -->
+              <div class="excel-sim-container">
+                <div class="excel-formula-bar">
+                  <div class="fx-indicator">fx</div>
+                  <input type="text" id="formula-input" placeholder="Seleccioná una celda vacía para ingresar su fórmula..." disabled />
+                  <button id="apply-formula-btn" onclick="applySelectedFormula()" disabled>Aplicar</button>
+                </div>
+                
+                <div class="excel-grid-wrapper">
+                  <table class="excel-grid-table">
+                    <thead>
+                      <tr>
+                        <th class="grid-header-col-index"></th>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                        <th>D</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="grid-row-index">1</td>
+                        <td class="excel-header-cell">Producto</td>
+                        <td class="excel-header-cell">Precio</td>
+                        <td class="excel-header-cell">Cantidad</td>
+                        <td class="excel-header-cell">Total</td>
+                      </tr>
+                      <tr>
+                        <td class="grid-row-index">2</td>
+                        <td>Cuaderno</td>
+                        <td class="num-cell">120</td>
+                        <td class="num-cell">5</td>
+                        <td class="editable-cell" id="cell-D2" onclick="selectCell('D2')" tabindex="0">—</td>
+                      </tr>
+                      <tr>
+                        <td class="grid-row-index">3</td>
+                        <td>Lápiz</td>
+                        <td class="num-cell">45</td>
+                        <td class="num-cell">10</td>
+                        <td class="num-cell" style="color:#64748b;">450</td>
+                      </tr>
+                      <tr>
+                        <td class="grid-row-index">4</td>
+                        <td>Carpeta</td>
+                        <td class="num-cell">350</td>
+                        <td class="num-cell">2</td>
+                        <td class="num-cell" style="color:#64748b;">700</td>
+                      </tr>
+                      <tr>
+                        <td class="grid-row-index">5</td>
+                        <td class="bold-text highlight-green">Total General</td>
+                        <td></td>
+                        <td></td>
+                        <td class="editable-cell bold-text highlight-green" id="cell-D5" onclick="selectCell('D5')" tabindex="0">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AUTOEVALUACIÓN BLOQUE 2 -->
+        <div class="quiz-container" id="quiz-b2">
+          <div class="quiz-header">
+            <h3>Autoevaluación del Bloque 2: Operaciones y funciones</h3>
+            <span class="quiz-badge">3 Preguntas</span>
+          </div>
+          <div class="quiz-questions">
+            <div class="quiz-question" data-correct="0">
+              <div class="quiz-question-text">1. ¿Con qué carácter tenés que comenzar obligatoriamente para escribir una fórmula o cálculo?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b2-1" value="0"> <span>A) Con el signo igual (=).</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b2-1" value="1"> <span>B) Con la palabra fx.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b2-1" value="2"> <span>C) Con un signo de pesos ($).</span></label>
+              </div>
+              <div class="quiz-feedback">El signo igual le avisa a Excel que el texto siguiente es una operación y no un texto simple.</div>
+            </div>
+            <div class="quiz-question" data-correct="1">
+              <div class="quiz-question-text">2. Si querés multiplicar el precio de B2 por la cantidad de C2, ¿cómo escribís la fórmula?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b2-2" value="0"> <span>A) B2 * C2</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b2-2" value="1"> <span>B) =B2*C2</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b2-2" value="2"> <span>C) =B2+C2</span></label>
+              </div>
+              <div class="quiz-feedback">Se inicia con (=), se usan los nombres de las celdas y el asterisco (*) representa la multiplicación.</div>
+            </div>
+            <div class="quiz-question" data-correct="2">
+              <div class="quiz-question-text">3. ¿Cuál es la forma correcta y veloz de sumar los valores desde la celda B2 hasta la B10?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b2-3" value="0"> <span>A) =SUMA(B2+B10)</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b2-3" value="1"> <span>B) =B2:B10</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b2-3" value="2"> <span>C) =SUMA(B2:B10)</span></label>
+              </div>
+              <div class="quiz-feedback">Los dos puntos (:) indican un rango continuo que abarca todas las celdas desde la primera hasta la última.</div>
+            </div>
+          </div>
+          <div class="quiz-action-bar">
+            <button class="btn-verify" onclick="verifyQuiz('quiz-b2')">Verificar Respuestas</button>
+            <div class="quiz-score-display">Puntuación: 0 / 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 3: ORGANIZACIÓN DE LA INFORMACIÓN -->
+    <div class="section" id="b3" role="tabpanel" aria-labelledby="tab-b3">
+      <div class="section-wrap">
+        <div class="section-heading">
+          <div class="block-label">Bloque <span>03</span></div>
+          <h2>Organización de la información</h2>
+          <div class="section-heading-bar"></div>
+          <p>Aprendé a ordenar y encontrar datos en tablas sencillas. Con las herramientas de ordenar y filtrar, podés navegar grandes listas sin perder tiempo ni desorganizar tu planilla.</p>
+        </div>
+
+        <div class="subblock">
+          <div class="subblock-header">
+            <span class="subblock-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v16a1 1 0 01-1 1H4a1 1 0 01-1-1V4z"></path></svg>
+            </span>
+            <span class="subblock-title">Búsqueda y Clasificación de Datos</span>
+            <span class="subblock-badge">Productividad</span>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-card-header">
+              <div class="icon-container">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+              </div>
+              <h3>El gran peligro de ordenar datos</h3>
+            </div>
+            <div class="concept-grid">
+              <div class="concept-col">
+                <div class="concept-col-icon negative">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Ordenar una columna sola (¡No lo hagas!)</h4>
+                <p>Seleccionar solo la columna de nombres y ordenarla. Si hacés esto, Excel va a mezclar los nombres pero dejará los precios, cantidades o notas donde estaban, rompiendo por completo la relación de tus registros.</p>
+              </div>
+              <div class="concept-col">
+                <div class="concept-col-icon positive">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Ordenar haciendo clic en la tabla (Recomendado)</h4>
+                <p>Hacer clic en una celda dentro de la columna a ordenar. Excel reconoce automáticamente que las columnas vecinas pertenecen a la misma tabla y desplaza cada fila completa y junta, manteniendo la información a salvo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.586A1 1 0 013 6.586V4z"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Filtros automáticos: Encontrá datos con un clic</div>
+                <div class="topic-desc">Los filtros automáticos le agregan un pequeño embudo (flechita) a los encabezados de tu tabla. Sirven para ocultar temporalmente lo que no te interesa y mostrar solo lo que estás buscando.</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Hacé clic en cualquier celda que tenga datos dentro de tu tabla.</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Andá a la pestaña <strong>Datos</strong> en el menú superior y hacé clic en el botón <strong>Filtro</strong> (icono de embudo).</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Hacé clic en la flechita que apareció en la cabecera que querés filtrar, desactivá "Seleccionar todo" y marcá la opción que buscás.</span></div>
+                <div class="step-item"><span class="step-num">4</span><span>Para ver todo de nuevo, hacé clic en la flechita y elegí <strong>Borrar filtro</strong>.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Ordenar de la A a la Z (o de menor a mayor)</div>
+                <div class="topic-desc">Ordenar te permite organizar listas de nombres alfabéticamente o números (como precios o notas) de forma creciente o decreciente. Siempre hacelo con la tabla completa para no mezclar los datos.</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Hacé clic en cualquier celda de la columna que querés ordenar (ej. en la columna de nombres).</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>En la pestaña <strong>Datos</strong> del menú de arriba, buscá el grupo de ordenar.</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Hacé clic en el botón <strong>AZ</strong> para ordenar de menor a mayor, o <strong>ZA</strong> para ordenar de mayor a menor.</span></div>
+                <div class="step-item"><span class="step-num">4</span><span>Excel va a reordenar toda la tabla completa automáticamente, manteniendo las filas intactas.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AUTOEVALUACIÓN BLOQUE 3 -->
+        <div class="quiz-container" id="quiz-b3">
+          <div class="quiz-header">
+            <h3>Autoevaluación del Bloque 3: Organización de datos</h3>
+            <span class="quiz-badge">3 Preguntas</span>
+          </div>
+          <div class="quiz-questions">
+            <div class="quiz-question" data-correct="1">
+              <div class="quiz-question-text">1. Si ordenás una tabla seleccionando una sola columna de nombres y sin expandir la selección:</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b3-1" value="0"> <span>A) Excel arroja un error y no permite ordenar nada.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b3-1" value="1"> <span>B) Se mezclan los datos, asociando los nombres a notas o números de otras filas.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b3-1" value="2"> <span>C) Se borran el resto de columnas de la tabla.</span></label>
+              </div>
+              <div class="quiz-feedback">Al ordenar únicamente la selección aislada, el resto de las celdas adyacentes no se desplazan, rompiendo la relación original.</div>
+            </div>
+            <div class="quiz-question" data-correct="1">
+              <div class="quiz-question-text">2. Cuando aplicás un filtro en una tabla para ocultar temporalmente datos:</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b3-2" value="0"> <span>A) Se eliminan del archivo de manera permanente.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b3-2" value="1"> <span>B) Se ocultan temporalmente y se pueden volver a ver limpiando el filtro.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b3-2" value="2"> <span>C) Se guardan automáticamente en una hoja nueva.</span></label>
+              </div>
+              <div class="quiz-feedback">Los filtros no destruyen información, solo colapsan a la vista las filas que no cumplen las condiciones del filtro.</div>
+            </div>
+            <div class="quiz-question" data-correct="2">
+              <div class="quiz-question-text">3. ¿En qué pestaña del menú superior de Excel se encuentran los Filtros y la Ordenación?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b3-3" value="0"> <span>A) Pestaña Inicio.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b3-3" value="1"> <span>B) Pestaña Insertar.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b3-3" value="2"> <span>C) Pestaña Datos.</span></label>
+              </div>
+              <div class="quiz-feedback">Tanto los filtros como las herramientas de ordenación se agrupan en la pestaña Datos.</div>
+            </div>
+          </div>
+          <div class="quiz-action-bar">
+            <button class="btn-verify" onclick="verifyQuiz('quiz-b3')">Verificar Respuestas</button>
+            <div class="quiz-score-display">Puntuación: 0 / 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOQUE 4: MOSTRAR RESULTADOS (GRÁFICOS BÁSICOS) -->
+    <div class="section" id="b4" role="tabpanel" aria-labelledby="tab-b4">
+      <div class="section-wrap">
+        <div class="section-heading">
+          <div class="block-label">Bloque <span>04</span></div>
+          <h2>Mostrar resultados (Gráficos básicos)</h2>
+          <div class="section-heading-bar"></div>
+          <p>Los números son más fáciles de entender si los convertís en imágenes. Aprendé a crear gráficos sencillos y claros para mostrar tus resultados de forma profesional.</p>
+        </div>
+
+        <div class="subblock">
+          <div class="subblock-header">
+            <span class="subblock-icon">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path></svg>
+            </span>
+            <span class="subblock-title">Visualización Gráfica y Salida Física</span>
+            <span class="subblock-badge">Visualización</span>
+          </div>
+
+          <div class="concept-card">
+            <div class="concept-card-header">
+              <div class="icon-container">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+              </div>
+              <h3>¿Qué gráfico usar según tus datos?</h3>
+            </div>
+            <div class="concept-grid">
+              <div class="concept-col">
+                <div class="concept-col-icon negative">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Gráfico de torta con muchos datos (No recomendado)</h4>
+                <p>Usar un gráfico circular cuando tenés muchas categorías (ej. ventas de 15 productos diferentes). El gráfico se llena de porciones tan finitas que resulta imposible leerlo o interpretarlo.</p>
+              </div>
+              <div class="concept-col">
+                <div class="concept-col-icon positive">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4>Gráfico de barras o circular simple (Recomendado)</h4>
+                <p>Usar barras o columnas cuando son más de 4 categorías para comparar. El gráfico circular o de torta reservalo únicamente cuando tenés 2 o 3 categorías (ej. "Aprobados" vs "Desaprobados").</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Insertar un gráfico en pocos pasos</div>
+                <div class="topic-desc">Los gráficos en Excel están conectados directamente a tu tabla de datos. Si modificás un número en tu planilla, la barra o sector del gráfico correspondiente se corregirá y adaptará sola en tiempo real.</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Seleccioná con el mouse el rango de celdas que querés graficar (incluyendo los títulos de las columnas).</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Hacé clic en la pestaña <strong>Insertar</strong> en el menú superior.</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Elegí el tipo de gráfico recomendado (ej. Gráfico de columnas o de barras) en la sección de Gráficos.</span></div>
+                <div class="step-item"><span class="step-num">4</span><span>El gráfico se creará en el momento; podés arrastrarlo para acomodarlo donde más te convenga.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-card-top">
+              <div class="topic-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+              </div>
+              <div>
+                <div class="topic-title">Darle formato al gráfico: Título y Etiquetas</div>
+                <div class="topic-desc">Un gráfico necesita nombres claros para entenderse. Excel te permite personalizar el título y agregar pequeñas etiquetas de datos para ver los números exactos arriba de cada barra de manera simple.</div>
+              </div>
+            </div>
+            <div class="topic-steps">
+              <div class="topic-steps-label">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                ¿Cómo se hace?
+              </div>
+              <div class="step-list">
+                <div class="step-item"><span class="step-num">1</span><span>Hacé un clic arriba del gráfico para seleccionarlo.</span></div>
+                <div class="step-item"><span class="step-num">2</span><span>Hacé doble clic en la caja de texto que dice "Título del gráfico" para escribir un nombre descriptivo.</span></div>
+                <div class="step-item"><span class="step-num">3</span><span>Usá el menú de diseño que aparece arriba para cambiar los colores o estilos preestablecidos con un clic.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- AUTOEVALUACIÓN BLOQUE 4 -->
+        <div class="quiz-container" id="quiz-b4">
+          <div class="quiz-header">
+            <h3>Autoevaluación del Bloque 4: Gráficos básicos</h3>
+            <span class="quiz-badge">3 Preguntas</span>
+          </div>
+          <div class="quiz-questions">
+            <div class="quiz-question" data-correct="1">
+              <div class="quiz-question-text">1. Si modificás un número en tu tabla de datos, ¿qué pasa con el gráfico que creaste a partir de ella?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b4-1" value="0"> <span>A) Tenés que borrar el gráfico y volver a crearlo.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b4-1" value="1"> <span>B) Se actualiza automáticamente reajustando sus barras o porciones en tiempo real.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b4-1" value="2"> <span>C) Excel bloquea el archivo por precaución.</span></label>
+              </div>
+              <div class="quiz-feedback">El gráfico y la tabla origen están vinculados dinámicamente; cualquier cambio se traslada al instante de forma automática.</div>
+            </div>
+            <div class="quiz-question" data-correct="2">
+              <div class="quiz-question-text">2. ¿Cuándo es conveniente utilizar un gráfico circular o de torta?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b4-2" value="0"> <span>A) Cuando tenés más de 15 categorías distintas.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b4-2" value="1"> <span>B) Para graficar tendencias a lo largo del tiempo.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b4-2" value="2"> <span>C) Únicamente cuando tenés pocas categorías (ejemplo: 2 a 4) y querés comparar partes de un total.</span></label>
+              </div>
+              <div class="quiz-feedback">Los gráficos circulares se vuelven confusos cuando se agregan demasiadas divisiones; es mejor dejarlos para comparar pocas porciones.</div>
+            </div>
+            <div class="quiz-question" data-correct="0">
+              <div class="quiz-question-text">3. Para crear un gráfico en Excel, ¿cuál es el paso previo indispensable?</div>
+              <div class="quiz-options">
+                <label class="quiz-option"><input type="radio" name="q-b4-3" value="0"> <span>A) Seleccionar con el mouse las celdas con datos y sus títulos.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b4-3" value="1"> <span>B) Escribir la fórmula =GRAFICO() en una celda vacía.</span></label>
+                <label class="quiz-option"><input type="radio" name="q-b4-3" value="2"> <span>C) Guardar el archivo como PDF primero.</span></label>
+              </div>
+              <div class="quiz-feedback">Excel necesita saber qué datos graficar y cuáles son los nombres de las columnas para armar las etiquetas correspondientes.</div>
+            </div>
+          </div>
+          <div class="quiz-action-bar">
+            <button class="btn-verify" onclick="verifyQuiz('quiz-b4')">Verificar Respuestas</button>
+            <div class="quiz-score-display">Puntuación: 0 / 3</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECURSOS AYUDA -->
+    <div class="section" id="rec" role="tabpanel" aria-labelledby="tab-rec">
+      <div class="section-wrap">
+        <div class="section-heading">
+          <div class="block-label">Centro <span>Recursos</span></div>
+          <h2>Recursos y guías de ayuda oficiales</h2>
+          <div class="section-heading-bar"></div>
+          <p>Enlaces directos a tutoriales y artículos de soporte de Microsoft Excel. Accesibles y actualizados para resolver cualquier duda adicional sobre funciones y planillas.</p>
+        </div>
+
+        <div class="rec-grid">
+          <!-- 1 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/crear-un-libro-en-excel-ae99a19a-ca59-43c3-8f0c-b261175653b6" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Crear un libro en Excel</div>
+            <div class="rec-desc">Guía básica para iniciar libros y guardar plantillas correctamente.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+          <!-- 2 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/escribir-datos-en-celdas-de-hojas-de-c%C3%A1lculo-5f40e0b9-1340-4e74-9b2d-15e34749fb8c" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Escribir datos en celdas</div>
+            <div class="rec-desc">Conceptos básicos para cargar números, textos y aplicar formatos rápidos.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+          <!-- 3 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/crear-una-f%C3%B3rmula-sencilla-en-excel-11a50f3b-61d0-4054-a708-4c138f7ff2c3" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Crear fórmulas sencillas</div>
+            <div class="rec-desc">Uso correcto de los operadores aritméticos básicos.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+          <!-- 4 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/f%C3%B3rmulas-y-funciones-29478d74-f571-4750-96d5-1bf4fa28c460" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Lista de funciones comunes</div>
+            <div class="rec-desc">Glosario interactivo con ejemplos del uso de SUMA y PROMEDIO.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+          <!-- 5 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/ordenar-datos-en-un-rango-o-tabla-cca0287a-0a1c-47a2-8b8b-57b711e561ea" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Ordenar datos de rango</div>
+            <div class="rec-desc">Instrucciones para expandir y ordenar de forma segura sin mezclar filas.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+          <!-- 6 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/filtrar-datos-de-un-rango-o-una-tabla-01832226-31b5-4568-8806-38c37dcc180e" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Filtrar datos de un rango</div>
+            <div class="rec-desc">Cómo activar los filtros inteligentes y limpiar búsquedas temporales.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+          <!-- 7 -->
+          <a class="rec-card" href="https://support.microsoft.com/es-es/office/crear-un-gr%C3%A1fico-de-principio-a-fin-150943c4-ad9e-4a72-88aa-2c5e5e6e3c0e" target="_blank" rel="noopener">
+            <div class="rec-badge">Soporte</div>
+            <div class="rec-title">Crear un gráfico en Excel</div>
+            <div class="rec-desc">Pasos detallados para graficar relaciones y añadir leyendas claras.</div>
+            <div class="rec-action">Abrir soporte &rarr;</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer-bar">
+    <div class="container">
+      <p>© 2026 Capacitación Nivel Inicial · Diseñado por el <strong>Lic. Marcelo J. Morini</strong> (<a href="mailto:morinimarcelo1976@gmail.com">morinimarcelo1976@gmail.com</a>) · <a href="#home">Volver Arriba</a></p>
+    </div>
+  </footer>
+
+  <!-- BUTTON BACK TO TOP -->
+  <button class="back-top" onclick="scrollToTop()" title="Subir">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:20px; height:20px;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7"></path></svg>
+  </button>
+
+  <script>
+    // Tab switching logic
+    function goTab(tabId, btn) {
+      const sections = document.querySelectorAll('.section');
+      const tabs = document.querySelectorAll('.nav-tab');
+
+      // Hide all sections
+      sections.forEach(sec => {
+        sec.classList.remove('active', 'fade-in');
+      });
+
+      // Deactivate all tabs
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+
+      // Show requested section and activate tab
+      const targetSec = document.getElementById(tabId);
+      if (targetSec) {
+        targetSec.classList.add('active');
+        // Force reflow for transitions
+        void targetSec.offsetWidth;
+        targetSec.classList.add('fade-in');
+      }
+
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      // Scroll just to the navigation bar
+      const navSticky = document.querySelector('.nav-sticky');
+      if (navSticky) {
+        const navRect = navSticky.getBoundingClientRect();
+        if (navRect.top < 0) {
+          window.scrollTo({
+            top: window.scrollY + navRect.top - 10,
+            behavior: 'smooth'
+          });
+        }
+      }
+    }
+
+    // Back to top scroll display
+    window.addEventListener('scroll', () => {
+      const backTopButton = document.querySelector('.back-top');
+      if (backTopButton) {
+        if (window.scrollY > 300) {
+          backTopButton.classList.add('vis');
+        } else {
+          backTopButton.classList.remove('vis');
+        }
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    // QUIZ LOGIC
+    function verifyQuiz(quizId) {
+      const container = document.getElementById(quizId);
+      if (!container) return;
+
+      const questions = container.querySelectorAll('.quiz-question');
+      let score = 0;
+      let unanswered = false;
+
+      questions.forEach((q, qIndex) => {
+        const selected = q.querySelector('input[type="radio"]:checked');
+        const correctAnswer = q.getAttribute('data-correct');
+        const options = q.querySelectorAll('.quiz-option');
+
+        if (!selected) {
+          unanswered = true;
+          return;
+        }
+
+        // Color highlighting
+        options.forEach((opt, optIndex) => {
+          const radioInput = opt.querySelector('input');
+          // Reset styles
+          opt.style.borderColor = '';
+          opt.style.background = '';
+          
+          if (optIndex == correctAnswer) {
+            opt.style.borderColor = '#22c55e';
+            opt.style.background = '#f0fdf4';
+          } else if (radioInput.checked) {
+            opt.style.borderColor = '#ef4444';
+            opt.style.background = '#fef2f2';
+          }
+        });
+
+        // Show feedback
+        const feedback = q.querySelector('.quiz-feedback');
+        if (feedback) {
+          feedback.style.display = 'block';
+        }
+
+        if (selected.value == correctAnswer) {
+          score++;
+        }
+      });
+
+      if (unanswered) {
+        alert('Por favor, respondé todas las preguntas antes de verificar.');
+        return;
+      }
+
+      // Display score
+      const scoreDisplay = container.querySelector('.quiz-score-display');
+      if (scoreDisplay) {
+        scoreDisplay.innerText = `Puntuación: ${score} / ${questions.length}`;
+      }
+    }
+
+    // Set selected quiz option styles dynamically
+    document.querySelectorAll('.quiz-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        const parent = opt.closest('.quiz-options');
+        const sibs = parent.querySelectorAll('.quiz-option');
+        sibs.forEach(s => s.classList.remove('selected'));
+        opt.classList.add('selected');
+        
+        const input = opt.querySelector('input');
+        if (input && e.target !== input) {
+          input.checked = true;
+        }
+      });
+    });
+
+    // SIMULATOR LOGIC
+    let selectedCellId = null;
+    const excelValues = {
+      D2: { formula: '', calculated: null, correct: false },
+      D5: { formula: '', calculated: null, correct: false }
+    };
+
+    function selectCell(cellId) {
+      // De-select previous
+      document.querySelectorAll('.editable-cell').forEach(c => {
+        c.classList.remove('selected');
+      });
+
+      selectedCellId = cellId;
+      const cellElement = document.getElementById(`cell-${cellId}`);
+      if (cellElement) {
+        cellElement.classList.add('selected');
+      }
+
+      const input = document.getElementById('formula-input');
+      const btn = document.getElementById('apply-formula-btn');
+      
+      input.disabled = false;
+      btn.disabled = false;
+      input.value = excelValues[cellId].formula;
+      input.focus();
+    }
+
+    function applySelectedFormula() {
+      if (!selectedCellId) return;
+
+      const input = document.getElementById('formula-input');
+      const rawFormula = input.value.trim();
+      const formulaClean = rawFormula.replace(/\s+/g, '').toUpperCase();
+      const cellElement = document.getElementById(`cell-${selectedCellId}`);
+
+      excelValues[selectedCellId].formula = rawFormula;
+
+      let isCorrect = false;
+      let displayVal = 'ERROR';
+
+      if (selectedCellId === 'D2') {
+        // Reto 1: `=B2*C2` o `=C2*B2`
+        if (formulaClean === '=B2*C2' || formulaClean === '=C2*B2') {
+          isCorrect = true;
+          displayVal = '600';
+        }
+      } else if (selectedCellId === 'D5') {
+        // Reto 2: `=SUMA(D2:D4)` o `=SUMA(D2,D3,D4)` o `=D2+D3+D4`
+        if (formulaClean === '=SUMA(D2:D4)' || formulaClean === '=SUMA(D2,D3,D4)' || formulaClean === '=D2+D3+D4') {
+          if (excelValues['D2'].correct) {
+            isCorrect = true;
+            displayVal = '1.750';
+          } else {
+            // Can't resolve sum without D2 correctly filled
+            alert('Para calcular el Total General (D5), primero debés resolver la celda D2 correctamente.');
+            return;
+          }
+        }
+      }
+
+      if (isCorrect) {
+        excelValues[selectedCellId].correct = true;
+        excelValues[selectedCellId].calculated = displayVal;
+        
+        cellElement.innerText = displayVal;
+        cellElement.className = 'editable-cell bold-text correct-val';
+        
+        // Mark challenge completed
+        let challengeId = '';
+        if (selectedCellId === 'D2') challengeId = 'excel-challenge-1';
+        if (selectedCellId === 'D5') challengeId = 'excel-challenge-2';
+        
+        const challengeItem = document.getElementById(challengeId);
+        if (challengeItem) {
+          challengeItem.classList.add('completed');
+        }
+      } else {
+        excelValues[selectedCellId].correct = false;
+        cellElement.innerText = 'ERROR';
+        cellElement.className = 'editable-cell bold-text error-val';
+      }
+
+      checkExcelChallengesAll();
+    }
+
+    function checkExcelChallengesAll() {
+      const allDone = excelValues['D2'].correct && excelValues['D5'].correct;
+      const banner = document.getElementById('excel-congrats-banner');
+      if (allDone && banner) {
+        banner.style.display = 'block';
+      }
+    }
+
+    // Enable key events for formula apply
+    document.getElementById('formula-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        applySelectedFormula();
+      }
+    });
+
+  </script>
+</body>
+</html>
