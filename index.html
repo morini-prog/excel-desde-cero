@@ -1158,62 +1158,42 @@
     .footer-bar {
       background: var(--dark-bg);
       color: rgba(255, 255, 255, 0.45);
-      padding: 60px 0 40px;
+      padding: 30px 0;
       font-size: 0.85rem;
       border-top: 1px solid rgba(255, 255, 255, 0.05);
-      position: relative;
     }
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr;
-      gap: 40px;
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 24px;
-      text-align: left;
     }
-    .footer-col h4 {
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 0.9rem;
-      font-weight: 600;
-      margin-top: 0;
-      margin-bottom: 16px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    .footer-col p {
-      margin: 0 0 12px;
+    .footer-info {
       line-height: 1.6;
-      color: rgba(255, 255, 255, 0.6);
     }
-    .footer-col a {
+    .footer-info a {
       color: rgba(255, 255, 255, 0.8);
       text-decoration: none;
       transition: color 0.2s ease;
-      display: inline-block;
     }
-    .footer-col a:hover {
+    .footer-info a:hover {
       color: var(--primary) !important;
     }
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      margin-top: 40px;
-      padding-top: 24px;
-      text-align: center;
-      color: rgba(255, 255, 255, 0.35);
-      font-size: 0.8rem;
+    .footer-nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      transition: color 0.2s ease;
+      font-weight: 500;
     }
-    .footer-logo {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 12px;
+    .footer-nav a:hover {
+      color: var(--primary) !important;
     }
     @media (max-width: 768px) {
-      .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
+      .footer-container {
+        flex-direction: column;
+        gap: 16px;
         text-align: center;
       }
     }
@@ -1968,24 +1948,12 @@
 
   <!-- FOOTER -->
   <footer class="footer-bar">
-    <div class="container footer-grid">
-      <div class="footer-col">
-        <div class="footer-logo">Capacitación nivel superior</div>
-        <p>Formación profesional y herramientas de ofimática para estudiantes del nivel superior. Potenciá tu rendimiento académico con metodologías de trabajo ágiles y eficientes.</p>
+    <div class="footer-container">
+      <div class="footer-info">
+        © 2026 Capacitación nivel superior · Diseñado por el <strong>Lic. Marcelo J. Morini</strong> (<a href="mailto:morinimarcelo1976@gmail.com">morinimarcelo1976@gmail.com</a>)
       </div>
-      <div class="footer-col">
-        <h4>Diseño y autoría</h4>
-        <p>Lic. Marcelo J. Morini</p>
-        <p><a href="mailto:morinimarcelo1976@gmail.com">morinimarcelo1976@gmail.com</a></p>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <p><a href="#home">Volver arriba &uarr;</a></p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <div class="container">
-        © 2026 Todos los derechos reservados.
+      <div class="footer-nav">
+        <a href="#home">Volver arriba &uarr;</a>
       </div>
     </div>
   </footer>
